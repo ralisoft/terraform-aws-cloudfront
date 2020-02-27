@@ -3,16 +3,15 @@ stages:
 
 test:
   stage: test
-  image: php:7.0
   allow_failure: true
   
-  before_script:
-    - gem install semver
+  # before_script:
+  #   - gem install semver
   
   script:
-    - export VERSION=$(semver inc minor)
+    - env
 
-  after_script:
-    - git tag $VERSION
-    - git push origin $VERSION
+  # after_script:
+  #   - git tag $VERSION
+  #   - git push origin $VERSION
     
