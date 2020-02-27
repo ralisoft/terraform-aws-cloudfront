@@ -1,3 +1,6 @@
+variables:
+  MAJOR_VERSION: "1"
+
 stages:
   - tag-release
 
@@ -6,6 +9,6 @@ tag-release:
   image: curlimages/curl
 
   script:
-    - curl --location --silent --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=v${CI_PIPELINE_IID}&ref=master" --header "PRIVATE-TOKEN:${GITLAB_TOKEN}"   
+    - curl --location --silent --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=${MAJOR_VERSION}.$(date +%j).${CI_PIPELINE_IID}&ref=master" --header "PRIVATE-TOKEN:${GITLAB_TOKEN}"
   only:
     - master
