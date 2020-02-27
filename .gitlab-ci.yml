@@ -1,10 +1,11 @@
 stages:
-  - test
+  - tag-release
 
-test:
-  stage: test
+tag-release:
+  stage: tag-release
+  image: curlimages/curl
 
   script:
-    - curl --location --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=test&ref=master" --header "PRIVATE-TOKEN:${GITLAB_TOKEN}"   
+    - curl --location --silent --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=v${CI_PIPELINE_IID}&ref=master" --header "PRIVATE-TOKEN:${GITLAB_TOKEN}"   
   only:
     - master
