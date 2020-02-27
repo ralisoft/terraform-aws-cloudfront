@@ -8,8 +8,8 @@ test:
     - echo "Testing"
  
   after_script:
-    - git tag $CI_JOB_ID
-    - git push origin $CI_JOB_ID
+    - git tag -a v1.05 -m "1st stable release
+    - git push origin --tag
     
   only:
     - master
