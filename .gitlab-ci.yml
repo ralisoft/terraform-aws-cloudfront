@@ -8,7 +8,7 @@ test:
     - echo "Testing"
  
   after_script:
-    - git tag -a v1.05 -m "1st stable release
+    - git tag -a v1.05 -m "1st stable release"
     - git push origin --tag
     
   only:
