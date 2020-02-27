@@ -5,7 +5,6 @@ test:
   stage: test
 
   script:
-    - curl -X POST --silent --show-error --fail "https://gitlab.my.org/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=gitlab-${CI_PIPELINE_IID}-master&ref=${CI_COMMIT_SHA}&private_token=${GITLAB_TOKEN}"
-    
+    - curl --location --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=test&ref=master" --header "PRIVATE-TOKEN:${GITLAB_TOKEN}"   
   only:
     - master
