@@ -3,7 +3,6 @@ stages:
 
 test:
   stage: test
-  image: alpine/git
 
   script:
     - echo "Testing"
