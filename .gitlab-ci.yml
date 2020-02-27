@@ -12,6 +12,7 @@ test:
   script:
     - export VERSION=$(semver inc minor)
 
-  create-tag:
-    name: $VERSION
-    msg: Bumps version to $VERSION
+  after_script:
+    - git tag $VERSION
+    - git push origin $VERSION
+    
