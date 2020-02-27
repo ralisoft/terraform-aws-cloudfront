@@ -8,6 +8,8 @@ test:
     - echo "Testing"
  
   after_script:
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
     - git tag -a v1.05 -m "1st stable release"
     - git push origin --tag
     
