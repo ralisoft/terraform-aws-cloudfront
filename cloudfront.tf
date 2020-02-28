@@ -16,12 +16,6 @@ resource "aws_cloudfront_distribution" "main" {
 
   wait_for_deployment = false
 
-  logging_config {
-    include_cookies = true
-    bucket          = element(data.aws_s3_bucket.logging_bucket.*.bucket_domain_name, 0)
-    prefix          = length(var.cloudfront_logging_prefix) > 0 ? var.cloudfront_logging_prefix : "logs/cloudfront/${var.environment}/${var.name}"
-  }
-
   default_cache_behavior {
     allowed_methods        = var.cloudfront_default_cache_behavior_allowed_methods
     cached_methods         = var.cloudfront_default_cache_behavior_cached_methods
