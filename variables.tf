@@ -22,7 +22,7 @@ variable "cloudfront_viewer_certificate_acm_certificate_arn" {
 }
 
 variable "cloudfront_price_class" {
-  type    = string
+  type = string
 
   default = "PriceClass_100"
 }
@@ -33,19 +33,19 @@ variable "cloudfront_is_ipv6_enabled" {
 }
 
 variable "cloudfront_comment" {
-  type    = string
+  type = string
 
   default = ""
 }
 
 variable "cloudfront_logging_config_prefix" {
-  type    = string
-  
+  type = string
+
   default = ""
 }
 
 variable "cloudfront_logging_bucket" {
-  type    = string
+  type = string
 }
 
 variable "cloudfront_default_cache_behavior_allowed_methods" {
@@ -74,7 +74,7 @@ variable "cloudfront_viewer_certificate_minimum_protocol_version" {
 }
 
 variable "cloudfront_maintenance_bucket" {
-  type    = string
+  type = string
 }
 
 variable "cloudfront_maintenance_prefix" {
