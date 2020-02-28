@@ -19,12 +19,6 @@ data "aws_s3_bucket" "maintenance_bucket" {
   bucket = var.cloudfront_maintenance_bucket
 }
 
-data "aws_s3_bucket" "logging_bucket" {
-  count = var.enabled ? 1 : 0
-
-  bucket = var.cloudfront_logging_bucket
-}
-
 data "aws_s3_bucket" "origin_bucket" {
   count = var.enabled ? 1 : 0
 
