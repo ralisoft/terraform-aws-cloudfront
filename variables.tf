@@ -38,16 +38,6 @@ variable "cloudfront_comment" {
   default = ""
 }
 
-variable "cloudfront_logging_config_prefix" {
-  type = string
-
-  default = ""
-}
-
-variable "cloudfront_logging_bucket" {
-  type = string
-}
-
 variable "cloudfront_default_cache_behavior_allowed_methods" {
   type    = list
   default = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
