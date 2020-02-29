@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "main" {
   default_cache_behavior {
     allowed_methods        = var.cloudfront_default_cache_behavior_allowed_methods
     cached_methods         = var.cloudfront_default_cache_behavior_cached_methods
-    target_origin_id       = "S3-${var.name}-origin"
+    target_origin_id       = var.cloudfront_maintenance_enabled ? "S3-${var.name}-maintenance" : "S3-${var.name}-origin"
     viewer_protocol_policy = var.cloudfront_default_cache_behavior_viewer_protocol_policy
     compress               = var.cloudfront_default_cache_behavior_compress
 

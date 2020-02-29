@@ -71,6 +71,11 @@ variable "cloudfront_maintenance_prefix" {
   type = string
 }
 
+variable "cloudfront_maintenance_enabled" {
+  type        = bool
+  default     = false
+}
+
 variable "cloudfront_custom_error_codes" {
   type    = list
   default = [400, 403, 404, 500]
