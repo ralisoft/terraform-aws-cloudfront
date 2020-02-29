@@ -84,6 +84,23 @@ variable "cloudfront_origin_prefix" {
   type = string
 }
 
+variable "cloudfront_geo_restriction_type" {
+  type = string
+
+  # e.g. "whitelist"
+  default     = "none"
+  description = "Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist`"
+}
+
+variable "cloudfront_geo_restriction_locations" {
+  type = list(string)
+
+  # e.g. ["US", "CA", "GB", "DE"]
+  default     = []
+  description = "List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist)"
+}
+
+
 # --------------------------------------------------------------
 #  Route53
 # --------------------------------------------------------------

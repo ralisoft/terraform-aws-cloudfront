@@ -46,6 +46,13 @@ resource "aws_cloudfront_distribution" "main" {
     origin_path = var.cloudfront_origin_prefix
   }
 
+  restrictions {
+    geo_restriction {
+      restriction_type = var.cloudfront_geo_restriction_type
+      locations        = var.cloudfront_geo_restriction_locations
+    }
+  }  
+
   dynamic "custom_error_response" {
     for_each = var.cloudfront_custom_error_codes
 
