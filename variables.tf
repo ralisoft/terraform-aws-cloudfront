@@ -71,6 +71,7 @@ variable "cloudfront_maintenance_bucket" {
 
 variable "cloudfront_maintenance_prefix" {
   type = string
+
   default = "/"
 }
 
@@ -86,10 +87,14 @@ variable "cloudfront_custom_error_codes" {
 
 variable "cloudfront_origin_bucket" {
   type = string
+
+  default = ""
 }
 
 variable "cloudfront_origin_prefix" {
   type = string
+
+  default = "/"
 }
 
 variable "cloudfront_geo_restriction_type" {
