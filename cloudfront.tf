@@ -46,7 +46,6 @@ resource "aws_cloudfront_distribution" "main" {
   origin {
     domain_name = var.cloudfront_origin_bucket
     origin_id   = "S3-${var.name}-origin"
-    origin_path = var.cloudfront_origin_prefix
   }
 
   restrictions {
