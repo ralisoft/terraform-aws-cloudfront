@@ -69,6 +69,7 @@ variable "cloudfront_maintenance_bucket" {
 
 variable "cloudfront_maintenance_prefix" {
   type = string
+  default = "/"
 }
 
 variable "cloudfront_maintenance_enabled" {
