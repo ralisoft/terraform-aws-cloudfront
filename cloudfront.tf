@@ -50,8 +50,8 @@ resource "aws_cloudfront_distribution" "main" {
   # Origin
   origin {
     origin_id   = "S3-${var.name}-origin"
-
     domain_name = var.cloudfront_origin_bucket
+    
     custom_origin_config {
       origin_protocol_policy = "http-only"
       http_port              = 80
