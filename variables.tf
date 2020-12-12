@@ -65,6 +65,8 @@ variable "cloudfront_viewer_certificate_minimum_protocol_version" {
 
 variable "cloudfront_maintenance_bucket" {
   type = string
+
+  default = ""
 }
 
 variable "cloudfront_maintenance_prefix" {

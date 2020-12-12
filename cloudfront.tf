@@ -33,10 +33,13 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   # Maintenance Page
-  origin {
-    domain_name = element(data.aws_s3_bucket.maintenance_bucket.*.bucket_domain_name, 0)
-    origin_id   = "S3-${var.name}-maintenance"
-    origin_path = var.cloudfront_maintenance_prefix
+  dynamic "origin" {
+    for_each = var.cloudfront_maintenance_enabled ? [1] : []
+    content {
+      domain_name = element(data.aws_s3_bucket.maintenance_bucket.*.website_domain, 0)
+      origin_id   = "S3-${var.name}-maintenance"
+      origin_path = var.cloudfront_maintenance_prefix
+    }
   }
 
   # Origin
