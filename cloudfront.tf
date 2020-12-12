@@ -16,38 +16,38 @@ resource "aws_cloudfront_distribution" "main" {
 
   wait_for_deployment = false
 
-  # default_cache_behavior {
-  #   allowed_methods        = var.cloudfront_default_cache_behavior_allowed_methods
-  #   cached_methods         = var.cloudfront_default_cache_behavior_cached_methods
-  #   target_origin_id       = var.cloudfront_maintenance_enabled ? "S3-${var.name}-maintenance" : "S3-${var.name}-origin"
-  #   viewer_protocol_policy = var.cloudfront_default_cache_behavior_viewer_protocol_policy
-  #   compress               = var.cloudfront_default_cache_behavior_compress
+  default_cache_behavior {
+    allowed_methods        = var.cloudfront_default_cache_behavior_allowed_methods
+    cached_methods         = var.cloudfront_default_cache_behavior_cached_methods
+    target_origin_id       = "S3-${var.name}-origin"
+    viewer_protocol_policy = var.cloudfront_default_cache_behavior_viewer_protocol_policy
+    compress               = var.cloudfront_default_cache_behavior_compress
 
-  #   forwarded_values {
-  #     query_string = false
+    forwarded_values {
+      query_string = false
 
-  #     cookies {
-  #       forward = "none"
-  #     }
-  #   }
-  # }
+      cookies {
+        forward = "none"
+      }
+    }
+  }
 
   # Maintenance Page
-  # dynamic "origin" {
-  #   for_each = var.cloudfront_maintenance_enabled ? [1] : []
-  #   content {
-  #     domain_name = element(data.aws_s3_bucket.maintenance_bucket.*.website_domain, 0)
-  #     origin_id   = "S3-${var.name}-maintenance"
-  #     origin_path = var.cloudfront_maintenance_prefix
-  #   }
-  # }
+  dynamic "origin" {
+    for_each = var.cloudfront_maintenance_enabled ? [1] : []
+    content {
+      domain_name = var.cloudfront_maintenance_bucket
+      origin_id   = "S3-${var.name}-maintenance"
+      origin_path = var.cloudfront_maintenance_prefix
+    }
+  }
 
   # Origin
-  # origin {
-  #   domain_name = element(data.aws_s3_bucket.origin_bucket.*.bucket_domain_name, 0)
-  #   origin_id   = "S3-${var.name}-origin"
-  #   origin_path = var.cloudfront_origin_prefix
-  # }
+  origin {
+    domain_name = var.cloudfront_origin_bucket
+    origin_id   = "S3-${var.name}-origin"
+    origin_path = var.cloudfront_origin_prefix
+  }
 
   restrictions {
     geo_restriction {
