@@ -5,23 +5,28 @@
 resource "aws_cloudfront_distribution" "main" {
   count = var.enabled ? 1 : 0
 
-  price_class = var.cloudfront_price_class
+  price_class = "PriceClass_All"
 
   aliases             = var.route53_enabled ? local.aliases : []
-  is_ipv6_enabled     = var.cloudfront_is_ipv6_enabled
   comment             = length(var.cloudfront_comment) > 0 ? var.cloudfront_comment : "${var.environment} => ${var.name}"
-  default_root_object = var.cloudfront_default_root_object
+  default_root_object = "index.html"
 
   enabled = true
 
   wait_for_deployment = false
 
   default_cache_behavior {
-    allowed_methods        = var.cloudfront_default_cache_behavior_allowed_methods
-    cached_methods         = var.cloudfront_default_cache_behavior_cached_methods
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD", "OPTIONS"]
+
     target_origin_id       = "S3-${var.name}-origin"
-    viewer_protocol_policy = var.cloudfront_default_cache_behavior_viewer_protocol_policy
-    compress               = var.cloudfront_default_cache_behavior_compress
+
+    min_ttl          = "0"
+    default_ttl      = "300"
+    max_ttl          = "1200"
+
+    viewer_protocol_policy = "redirect-to-https"
+    compress               = true
 
     forwarded_values {
       query_string = false
@@ -33,19 +38,26 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   # Maintenance Page
-  dynamic "origin" {
-    for_each = var.cloudfront_maintenance_enabled ? [1] : []
-    content {
-      domain_name = var.cloudfront_maintenance_bucket
-      origin_id   = "S3-${var.name}-maintenance"
-      origin_path = var.cloudfront_maintenance_prefix
-    }
-  }
+  # dynamic "origin" {
+  #   for_each = var.cloudfront_maintenance_enabled ? [1] : []
+  #   content {
+  #     domain_name = var.cloudfront_maintenance_bucket
+  #     origin_id   = "S3-${var.name}-maintenance"
+  #     origin_path = var.cloudfront_maintenance_prefix
+  #   }
+  # }
 
   # Origin
   origin {
-    domain_name = var.cloudfront_origin_bucket
     origin_id   = "S3-${var.name}-origin"
+
+    domain_name = var.cloudfront_origin_bucket
+    custom_origin_config {
+      origin_protocol_policy = "http-only"
+      http_port              = 80
+      https_port             = 443
+      origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1", "TLSv1"]
+    }    
   }
 
   restrictions {
@@ -66,11 +78,10 @@ resource "aws_cloudfront_distribution" "main" {
   #   }
   # }
 
-  tags = merge(local.tags, {})
+  # tags = merge(local.tags, {})
 
   viewer_certificate {
     acm_certificate_arn      = var.cloudfront_viewer_certificate_acm_certificate_arn
-    minimum_protocol_version = var.cloudfront_viewer_certificate_minimum_protocol_version
     ssl_support_method       = "sni-only"
   }
 
