@@ -15,6 +15,6 @@ data "aws_iam_policy_document" "s3_policy" {
 resource "aws_s3_bucket_policy" "policy" {
   count = var.enabled ? 1 : 0
 
-  bucket = data.aws_s3_bucket.origin_bucket[0].id)
+  bucket = data.aws_s3_bucket.origin_bucket[0].id
   policy = data.aws_iam_policy_document.s3_policy.json
 }
