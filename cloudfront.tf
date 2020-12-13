@@ -71,16 +71,16 @@ resource "aws_cloudfront_distribution" "main" {
   #   }
   # }
 
-  # tags = merge(local.tags, {})
+  tags = merge(local.tags, {})
 
-  # viewer_certificate {
-  #   acm_certificate_arn      = var.cloudfront_viewer_certificate_acm_certificate_arn
-  #   ssl_support_method       = "sni-only"
-  # }
+  viewer_certificate {
+    acm_certificate_arn      = var.cloudfront_viewer_certificate_acm_certificate_arn
+    ssl_support_method       = "sni-only"
+  }
 
-  # lifecycle {
-  #   ignore_changes = []
-  # }
+  lifecycle {
+    ignore_changes = []
+  }
 }
 
 output "cloudfront_id" {
