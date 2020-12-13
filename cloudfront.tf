@@ -50,22 +50,15 @@ resource "aws_cloudfront_distribution" "main" {
   # Origin
   origin {
     origin_id   = "S3-${var.name}-origin"
-    domain_name = var.cloudfront_origin_bucket
-
-    s3_origin_config {
-      origin_protocol_policy = "http-only"
-      http_port              = 80
-      https_port             = 443
-      origin_ssl_protocols   = ["TLSv1.2", "TLSv1.1", "TLSv1"]
-    }    
+    domain_name = var.cloudfront_origin_bucket    
   }
 
-  # restrictions {
-  #   geo_restriction {
-  #     restriction_type = var.cloudfront_geo_restriction_type
-  #     locations        = var.cloudfront_geo_restriction_locations
-  #   }
-  # }  
+  restrictions {
+    geo_restriction {
+      restriction_type = var.cloudfront_geo_restriction_type
+      locations        = var.cloudfront_geo_restriction_locations
+    }
+  }  
 
   # dynamic "custom_error_response" {
   #   for_each = var.cloudfront_custom_error_codes
