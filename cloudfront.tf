@@ -51,8 +51,8 @@ resource "aws_cloudfront_distribution" "main" {
   origin {
     origin_id   = "S3-${var.name}-origin"
     domain_name = var.cloudfront_origin_bucket
-    
-    custom_origin_config {
+
+    s3_origin_config {
       origin_protocol_policy = "http-only"
       http_port              = 80
       https_port             = 443
@@ -60,12 +60,12 @@ resource "aws_cloudfront_distribution" "main" {
     }    
   }
 
-  restrictions {
-    geo_restriction {
-      restriction_type = var.cloudfront_geo_restriction_type
-      locations        = var.cloudfront_geo_restriction_locations
-    }
-  }  
+  # restrictions {
+  #   geo_restriction {
+  #     restriction_type = var.cloudfront_geo_restriction_type
+  #     locations        = var.cloudfront_geo_restriction_locations
+  #   }
+  # }  
 
   # dynamic "custom_error_response" {
   #   for_each = var.cloudfront_custom_error_codes
@@ -80,14 +80,14 @@ resource "aws_cloudfront_distribution" "main" {
 
   # tags = merge(local.tags, {})
 
-  viewer_certificate {
-    acm_certificate_arn      = var.cloudfront_viewer_certificate_acm_certificate_arn
-    ssl_support_method       = "sni-only"
-  }
+  # viewer_certificate {
+  #   acm_certificate_arn      = var.cloudfront_viewer_certificate_acm_certificate_arn
+  #   ssl_support_method       = "sni-only"
+  # }
 
-  lifecycle {
-    ignore_changes = []
-  }
+  # lifecycle {
+  #   ignore_changes = []
+  # }
 }
 
 output "cloudfront_id" {
