@@ -52,13 +52,8 @@ resource "aws_cloudfront_distribution" "main" {
     origin_id   = "S3-${var.name}-origin"
     domain_name = var.cloudfront_origin_bucket    
 
-    custom_origin_config {
-      origin_protocol_policy = "http-only"
-
-      http_port  = "80"
-      https_port = "443"
-
-      origin_ssl_protocols = ["TLSv1.2"]
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.example.cloudfront_access_identity_path
     }
   }
 
@@ -90,6 +85,10 @@ resource "aws_cloudfront_distribution" "main" {
   lifecycle {
     ignore_changes = []
   }
+}
+
+resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+  comment = "Some comment"
 }
 
 output "cloudfront_id" {
