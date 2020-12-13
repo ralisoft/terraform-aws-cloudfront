@@ -50,10 +50,10 @@ resource "aws_cloudfront_distribution" "main" {
   # Origin
   origin {
     origin_id   = "S3-${var.name}-origin"
-    domain_name = data.aws_s3_bucket.origin_bucket.bucket_domain_name
+    domain_name = data.aws_s3_bucket.origin_bucket[0].bucket_domain_name
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.example.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
     }
   }
 
@@ -87,9 +87,7 @@ resource "aws_cloudfront_distribution" "main" {
   }
 }
 
-resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
-  comment = "Some comment"
-}
+resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {}
 
 output "cloudfront_id" {
   value = var.enabled ? aws_cloudfront_distribution.main[0].id : ""
