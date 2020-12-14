@@ -69,16 +69,16 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }  
 
-  # dynamic "custom_error_response" {
-  #   for_each = var.cloudfront_custom_error_codes
+  dynamic "custom_error_response" {
+    for_each = var.cloudfront_custom_error_codes
 
-  #   content {
-  #     error_code            = custom_error_response.value
-  #     error_caching_min_ttl = 300
-  #     response_code         = 200
-  #     response_page_path    = "/${var.cloudfront_default_root_object}"
-  #   }
-  # }
+    content {
+      error_code            = custom_error_response.value
+      error_caching_min_ttl = 300
+      response_code         = 200
+      response_page_path    = "/${var.cloudfront_default_root_object}"
+    }
+  }
 
   tags = merge(local.tags, {})
 
