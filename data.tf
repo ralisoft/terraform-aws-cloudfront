@@ -13,8 +13,8 @@ data "aws_route53_zone" "domain" {
   name = "${var.route53_domain}."
 }
 
-data "aws_s3_bucket" "origin_bucket" {
+data "aws_s3_bucket" "bucket" {
   count = var.enabled ? 1 : 0
 
-  bucket = var.cloudfront_origin_bucket
+  bucket = var.cloudfront_bucket
 }

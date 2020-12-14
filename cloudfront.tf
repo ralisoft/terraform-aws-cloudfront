@@ -37,20 +37,25 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  # Maintenance Page
-  # dynamic "origin" {
-  #   for_each = var.cloudfront_maintenance_enabled ? [1] : []
-  #   content {
-  #     domain_name = var.cloudfront_maintenance_bucket
-  #     origin_id   = "S3-${var.name}-maintenance"
-  #     origin_path = var.cloudfront_maintenance_prefix
-  #   }
-  # }
+  Maintenance Page
+  dynamic "origin" {
+    for_each = var.cloudfront_maintenance_enabled ? [1] : []
+    content {
+      origin_id   = "S3-${var.name}-${var.cloudfront_maintenance_prefix}"
+      origin_path = "${var.cloudfront_maintenance_prefix}}"
+      domain_name = data.aws_s3_bucket.bucket[0].bucket_domain_name
+      
+      s3_origin_config {
+        origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
+      }
+    }
+  }
 
   # Origin
   origin {
     origin_id   = "S3-${var.name}-origin"
-    domain_name = data.aws_s3_bucket.origin_bucket[0].bucket_domain_name
+    origin_path = "/${var.name}"
+    domain_name = data.aws_s3_bucket.bucket[0].bucket_domain_name
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path

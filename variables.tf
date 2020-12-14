@@ -63,16 +63,14 @@ variable "cloudfront_viewer_certificate_minimum_protocol_version" {
   default = "TLSv1.1_2016"
 }
 
-variable "cloudfront_maintenance_bucket" {
+variable "cloudfront_bucket" {
   type = string
-
   default = ""
 }
 
 variable "cloudfront_maintenance_prefix" {
   type = string
-
-  default = "/"
+  default = "/clutter-maintenance"
 }
 
 variable "cloudfront_maintenance_enabled" {
@@ -83,18 +81,6 @@ variable "cloudfront_maintenance_enabled" {
 variable "cloudfront_custom_error_codes" {
   type    = list
   default = [400, 403, 404, 500]
-}
-
-variable "cloudfront_origin_bucket" {
-  type = string
-
-  default = ""
-}
-
-variable "cloudfront_origin_prefix" {
-  type = string
-
-  default = "/"
 }
 
 variable "cloudfront_geo_restriction_type" {
