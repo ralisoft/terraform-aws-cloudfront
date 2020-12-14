@@ -37,7 +37,7 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  Maintenance Page
+  # Maintenance Page
   dynamic "origin" {
     for_each = var.cloudfront_maintenance_enabled ? [1] : []
     content {
