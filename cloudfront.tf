@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "main" {
     for_each = var.cloudfront_maintenance_enabled ? [1] : []
     content {
       origin_id   = "S3-${var.name}-${var.cloudfront_maintenance_prefix}"
-      origin_path = "${var.cloudfront_maintenance_prefix}"
+      origin_path = var.cloudfront_maintenance_prefix
       domain_name = data.aws_s3_bucket.bucket[0].bucket_domain_name
       
       s3_origin_config {
