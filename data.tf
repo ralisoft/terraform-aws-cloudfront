@@ -1,20 +1,16 @@
-#--------------------------------------------------------------
-# Data Source
-#--------------------------------------------------------------
-
-data "aws_caller_identity" "current" {
-}
+data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
-data "aws_route53_zone" "domain" {
-  count = var.enabled ? 1 : 0
-
-  name = "${var.route53_domain}."
+data "aws_s3_bucket" "logging_bucket" {
+  bucket = try(var.cloudfront_logging_config.bucket, "${var.aws_account}-logging-${var.aws_region}")
 }
 
-data "aws_s3_bucket" "bucket" {
-  count = var.enabled ? 1 : 0
+data "aws_waf_web_acl" "waf" {
+  name = var.cloudfront_waf_acl_name
+}
 
-  bucket = var.cloudfront_bucket
+data "aws_route53_zone" "main" {
+  name         = var.route53_hosted_zone
+  private_zone = false
 }
